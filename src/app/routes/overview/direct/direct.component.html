@@ -1,0 +1,73 @@
+<page-header></page-header>
+<!-- <div [style]="{ position: 'fixed', right: '32px', top: '102px', 'z-index': 2147483640 }"></div> -->
+
+<div nz-row nzGutter="16">
+  <div nz-col [nzSpan]="18" [nzOffset]="2">
+    <div class="p-md text-grey-darker bg-white" [align]="'middle'">
+      <div class="text-nowrap h2"><i nz-icon nzType="area-chart" nzTheme="outline"></i>Overview</div>
+    </div>
+  </div>
+  <div nz-col [nzSpan]="2" [nzOffset]="2">
+    <button nz-button nzType="primary" [nzSize]="'large'" nzShape="circle" (click)="refresh()"><i nz-icon nzType="reload"></i></button>
+  </div>
+</div>
+<div [style]="{ marginTop: '20px' }" nz-row nzGutter="16">
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-primary rounded-md">
+      <div nz-col nzSpan="20" class="p-md text-white">
+        <div class="h2 mt0">{{ blockNumber }}</div>
+        <p class="text-nowrap mb0"><i nz-icon nzType="block" nzTheme="outline"></i>区块高度</p>
+      </div>
+      <div nz-col nzSpan="4">
+        <a>
+          <i nz-icon nzType="info-circle" [nz-tooltip]="'当前区块高度'" style="color: 'Azure'"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-orange rounded-md">
+      <div nz-col nzSpan="20" class="p-md text-white">
+        <div class="h2 mt0">{{ transactionCount }}</div>
+        <p class="text-nowrap mb0"><i nz-icon nzType="profile" nzTheme="outline" style="color: 'Azure'"></i>交易数量</p>
+      </div>
+      <div nz-col nzSpan="4">
+        <a>
+          <i nz-icon nzType="info-circle" [nz-tooltip]="'当前区块链系统中交易的数量'" style="color: 'Azure'"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-green rounded-md">
+      <div nz-col nzSpan="20" class="p-md text-white">
+        <div class="h2 mt0">{{ nodeCount }}</div>
+        <p class="text-nowrap mb0"><i nz-icon nzType="deployment-unit" nzTheme="outline" style="color: 'Azure'"></i>节点数量</p>
+      </div>
+      <div nz-col nzSpan="4">
+        <a>
+          <i nz-icon nzType="info-circle" [nz-tooltip]="'当前区块链系统中节点的数量'" style="color: 'Azure'"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- <div nz-col nzXs="24" nzSm="12" nzMd="6" class="mb-md">
+    <div nz-row nzType="flex" nzAlign="middle" class="bg-magenta rounded-md">
+      <div nz-col nzSpan="12" class="p-md text-white">
+        <div class="h2 mt0">456</div>
+        <p class="text-nowrap mb0">Support Tickets</p>
+      </div>
+      <div nz-col nzSpan="12">
+        <g2-mini-bar
+          *ngIf="webSite"
+          height="35"
+          color="#fff"
+          borderWidth="3"
+          [padding]="[5, 30]"
+          [data]="webSite"
+          tooltipType="mini"
+        ></g2-mini-bar>
+      </div>
+    </div>
+  </div> -->
+</div>

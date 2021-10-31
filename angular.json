@@ -25,7 +25,7 @@
             "main": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "assets": ["src/assets", "src/favicon.ico"],
+            "assets": ["src/assets", "src/favicon.ico", {"glob":"**/*","input":"./node_modules/@ant-design/icons-angular/src/inline-svg/","output":"/assets/"}],
             "styles": ["src/styles.less"],
             "scripts": [],
             "allowedCommonJsDependencies": ["ajv", "ajv-formats"]

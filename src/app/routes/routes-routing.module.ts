@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SimpleGuard } from '@delon/auth';
+import { JWTGuard, SimpleGuard } from '@delon/auth';
 import { PreloadOptionalModules } from '@delon/theme';
 import { environment } from '@env/environment';
 
@@ -12,8 +12,8 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutBasicComponent,
-    canActivate: [SimpleGuard],
-    canActivateChild: [SimpleGuard],
+    canActivate: [JWTGuard],
+    canActivateChild: [JWTGuard],
     data: {},
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -29,7 +29,12 @@ const routes: Routes = [
       { path: 'style', loadChildren: () => import('./style/style.module').then(m => m.StyleModule) },
       { path: 'delon', loadChildren: () => import('./delon/delon.module').then(m => m.DelonModule) },
       { path: 'extras', loadChildren: () => import('./extras/extras.module').then(m => m.ExtrasModule) },
-      { path: 'pro', loadChildren: () => import('./pro/pro.module').then(m => m.ProModule) }
+      { path: 'pro', loadChildren: () => import('./pro/pro.module').then(m => m.ProModule) },
+      { path: 'post-evidence', loadChildren: () => import('./post-evidence/post-evidence.module').then(m => m.PostEvidenceModule) },
+      { path: 'verify-evidence', loadChildren: () => import('./verify-evidence/verify-evidence.module').then(m => m.VerifyEvidenceModule) },
+      { path: 'get-evidence', loadChildren: () => import('./get-evidence/get-evidence.module').then(m => m.GetEvidenceModule) },
+      { path: 'search-evidence', loadChildren: () => import('./search-evidence/search-evidence.module').then(m => m.SearchEvidenceModule) },
+      { path: 'overview', loadChildren: () => import('./overview/overview.module').then(m => m.OverviewModule) }
     ]
   },
   // Blak Layout 空白布局

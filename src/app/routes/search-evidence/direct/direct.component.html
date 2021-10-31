@@ -1,0 +1,83 @@
+<page-header [title]="'查询表格'"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form (ngSubmit)="getData()" class="search__form">
+    <div nz-row>
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label nzFor="username">用户名</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="queryParams.username" name="username" placeholder="请输入" id="username" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- <div nz-col [nzSpan]="4" [nzOffset]="2">
+        <nz-form-item>
+          <nz-form-label nzFor="blockNumber">区块高度</nz-form-label>
+          <nz-form-control>
+            <nz-input-number
+              [(ngModel)]="queryParams.blockNumber"
+              [nzMin]="0"
+              [nzStep]="1"
+              name="blockNumber"
+              id="blockNumber"
+            ></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div> -->
+      <div nz-col [nzSpan]="8" [nzOffset]="2">
+        <nz-form-item>
+          <nz-form-label nzFor="dateRange">日期范围</nz-form-label>
+          <nz-form-control>
+            <nz-range-picker [(ngModel)]="queryParams.dateRange" name="dateRange" id="dateRange" [nzSize]="'default'"></nz-range-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="4"></div>
+    </div>
+    <div nz-row>
+      <div nz-col [nzSpan]="24" [class.text-right]="true">
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading">查询</button>
+        <button nz-button type="reset" (click)="reset()" class="mx-sm">重置</button>
+      </div>
+    </div>
+  </form>
+  <!-- <button nz-button (click)="add(modalContent)" [nzType]="'primary'">
+    <i nz-icon nzType="plus"></i>
+    <span>新建</span>
+  </button> -->
+  <ng-container *ngIf="selectedRows.length > 0">
+    <button nz-button>批量操作</button>
+    <button nz-button nz-dropdown [nzDropdownMenu]="batchMenu" nzPlacement="bottomLeft">
+      更多操作
+      <i nz-icon nzType="down"></i>
+    </button>
+    <nz-dropdown-menu #batchMenu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item (click)="remove()">删除</li>
+        <li nz-menu-item (click)="approval()">批量审批</li>
+      </ul>
+    </nz-dropdown-menu>
+  </ng-container>
+  <div class="my-md" *ngIf="false">
+    <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
+      <ng-template #message>
+        已选择
+        <strong class="text-primary">{{ selectedRows.length }}</strong> 项&nbsp;&nbsp; 服务调用总计 <strong></strong> 万
+        <a *ngIf="false" (click)="st.clearCheck()" class="ml-lg">清空</a>
+      </ng-template>
+    </nz-alert>
+  </div>
+  <st #st [widthMode]="{ type: 'strict' }" [columns]="columns" [data]="data" [loading]="loading" (change)="stChange($event)">
+    <ng-template st-row="status" let-i>
+      <nz-badge [nzStatus]="i.statusType" [nzText]="i.statusText"></nz-badge>
+    </ng-template>
+  </st>
+</nz-card>
+<!-- <ng-template #modalContent>
+  <nz-form-item>
+    <nz-form-label nzFor="no">描述</nz-form-label>
+    <nz-form-control>
+      <input nz-input [(ngModel)]="description" name="description" placeholder="请输入" id="no" />
+    </nz-form-control>
+  </nz-form-item>
+</ng-template> -->

@@ -1,2 +1,5 @@
 {
+    "/exportedAPI": {
+        "target": "http://localhost:8000"
+    }
 }

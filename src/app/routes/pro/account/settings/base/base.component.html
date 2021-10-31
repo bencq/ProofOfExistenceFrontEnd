@@ -6,7 +6,7 @@
           <input nz-input type="email" [(ngModel)]="user.email" name="email" required />
         </se>
         <se label="昵称" error="请输入您的昵称!">
-          <input nz-input [(ngModel)]="user.name" name="name" required />
+          <input nz-input [(ngModel)]="user.username" name="name" required />
         </se>
         <se label="个人简介">
           <textarea
@@ -31,10 +31,10 @@
               required
               class="width-50 mr-sm"
             >
-              <nz-option *ngFor="let p of provinces" [nzLabel]="p.name" [nzValue]="p.id"></nz-option>
+              <nz-option *ngFor="let p of provinces" [nzLabel]="p.username" [nzValue]="p.id"></nz-option>
             </nz-select>
             <nz-select [(ngModel)]="user.geographic.city.key" name="geographic.city.key" required class="width-50">
-              <nz-option *ngFor="let p of cities" [nzLabel]="p.name" [nzValue]="p.id"></nz-option>
+              <nz-option *ngFor="let p of cities" [nzLabel]="p.username" [nzValue]="p.id"></nz-option>
             </nz-select>
           </div>
         </se>

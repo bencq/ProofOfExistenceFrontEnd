@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { ACLService } from '@delon/acl';
+import { TokenService } from '@delon/auth';
 import { ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
@@ -22,6 +23,7 @@ export class StartupService {
     private menuService: MenuService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private settingService: SettingsService,
+    private tokenService: TokenService,
     private aclService: ACLService,
     private titleService: TitleService,
     private httpClient: HttpClient
@@ -44,7 +46,15 @@ export class StartupService {
         // 应用信息：包括站点名、描述、年份
         this.settingService.setApp(appData.app);
         // 用户信息：包括姓名、头像、邮箱地址
-        this.settingService.setUser(appData.user);
+        let data = this.tokenService.get();
+        if (Object.keys(data).length != 0) {
+          let jwt_payload: string = data.token.split('.')[1];
+          let jwt_payload_decoded: Object = JSON.parse(window.atob(jwt_payload));
+          this.settingService.setUser(jwt_payload_decoded);
+        } else {
+          this.settingService.setUser(appData.user);
+        }
+
         // ACL：设置权限为全量
         this.aclService.setFull(true);
         // 初始化菜单

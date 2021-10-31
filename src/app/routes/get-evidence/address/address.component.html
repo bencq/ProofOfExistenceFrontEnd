@@ -1,0 +1,49 @@
+<page-header [title]="'存证获取'">输入存证地址，获取存证数据</page-header>
+
+<form nz-form [formGroup]="form" (ngSubmit)="submit()" [nzLayout]="'vertical'" labelWidth="200">
+  <nz-card nzTitle="存证获取" [nzBodyStyle]="{ 'border-color': 'silver' }">
+    <nz-row [nzGutter]="0">
+      <nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please enter mobile number, muse be: admin or user">
+            <nz-radio-group formControlName="contentType" (ngModelChange)="contentTypeChanged($event)">
+              <label nz-radio [nzValue]="contentTypeValues[0]">存证地址</label>
+              <label nz-radio [nzValue]="contentTypeValues[1]">存证ID</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="'请输入正确的' + (contentType.value === contentTypeValues[0] ? '存证地址' : '存证ID')">
+            <textarea nz-input formControlName="contentData" [nzAutosize]="{ minRows: 14 }" placeholder="..."></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <!-- <nz-col [nzSpan]="1"></nz-col>
+      <nz-col [nzSpan]="5">
+        <nz-form-item>
+          <nz-form-label nzFor="username"><i nz-icon [nzType]="'user'"></i>上链用户</nz-form-label>
+          <nz-form-control nzErrorTip="请选择需要获取的存证数据的上链用户">
+            <nz-select *ngIf="isLoading" [nzPlaceHolder]="'...'" formControlName="username">
+              <ng-container *ngFor="let opt of optionList">
+                <nz-option *ngIf="isLoading" [nzValue]="opt" [nzLabel]="opt"></nz-option>
+              </ng-container>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col> -->
+    </nz-row>
+  </nz-card>
+  <nz-card nzTitle="确认">
+    <nz-row [nzGutter]="0">
+      <nz-col [nzSm]="24">
+        <nz-form-item>
+          <!-- <nz-form-label nzFor="name"></nz-form-label> -->
+          <nz-form-control nzErrorTip="---">
+            <button nz-button nzType="primary" [disabled]="form.invalid" type="submit" [nzLoading]="submitting">获取</button>
+            <!-- <button nz-button class="ml-sm">保存</button> -->
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+</form>

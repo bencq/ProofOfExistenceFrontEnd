@@ -7,11 +7,11 @@ import { environment } from '@env/environment';
   selector: 'layout-basic',
   template: `
     <layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl">
-      <layout-default-header-item direction="left">
+      <!-- <layout-default-header-item direction="left">
         <a layout-default-header-item-trigger href="//github.com/ng-alain/ng-alain" target="_blank">
           <i nz-icon nzType="github"></i>
         </a>
-      </layout-default-header-item>
+      </layout-default-header-item> -->
       <layout-default-header-item direction="left" hidden="mobile">
         <a layout-default-header-item-trigger routerLink="/passport/lock">
           <i nz-icon nzType="lock"></i>
@@ -25,12 +25,12 @@ import { environment } from '@env/environment';
       <layout-default-header-item direction="middle">
         <header-search class="alain-default__search" [(toggleChange)]="searchToggleStatus"></header-search>
       </layout-default-header-item>
-      <layout-default-header-item direction="right">
+      <!-- <layout-default-header-item direction="right">
         <header-notify></header-notify>
-      </layout-default-header-item>
-      <layout-default-header-item direction="right" hidden="mobile">
+      </layout-default-header-item> -->
+      <!-- <layout-default-header-item direction="right" hidden="mobile">
         <header-task></header-task>
-      </layout-default-header-item>
+      </layout-default-header-item> -->
       <layout-default-header-item direction="right" hidden="mobile">
         <header-icon></header-icon>
       </layout-default-header-item>
@@ -62,7 +62,7 @@ import { environment } from '@env/environment';
         <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
           <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar"></nz-avatar>
           <div class="alain-default__aside-user-info">
-            <strong>{{ user.name }}</strong>
+            <strong>{{ user.username }}</strong>
             <p class="mb0">{{ user.email }}</p>
           </div>
         </div>

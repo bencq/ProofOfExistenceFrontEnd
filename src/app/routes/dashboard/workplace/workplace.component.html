@@ -77,7 +77,7 @@
         <nz-list-item *ngFor="let item of activities">
           <nz-list-item-meta [nzAvatar]="item.user.avatar" [nzTitle]="activeTitle" [nzDescription]="activeDescription">
             <ng-template #activeTitle>
-              <a (click)="msg.success(item.user.name)" class="username">{{ item.user.name }}</a>
+              <a (click)="msg.success(item.user.username)" class="username">{{ item.user.username }}</a>
               &nbsp;
               <span class="event" [innerHTML]="item.template"></span>
             </ng-template>

@@ -5,7 +5,7 @@ import { zip } from 'rxjs';
 
 interface ProAccountSettingsUser {
   email: string;
-  name: string;
+  username: string;
   profile: string;
   country: string;
   address: string;
@@ -22,7 +22,7 @@ interface ProAccountSettingsUser {
 }
 
 interface ProAccountSettingsCity {
-  name: string;
+  username: string;
   id: string;
 }
 

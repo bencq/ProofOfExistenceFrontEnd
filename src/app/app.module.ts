@@ -5,7 +5,7 @@ import { default as ngLang } from '@angular/common/locales/zh';
 import { APP_INITIALIZER, LOCALE_ID, NgModule, Type } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SimpleInterceptor } from '@delon/auth';
+import { JWTInterceptor, SimpleInterceptor } from '@delon/auth';
 import { DELON_LOCALE, zh_CN as delonLang, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { NZ_DATE_LOCALE, NZ_I18N, zh_CN as zorroLang } from 'ng-zorro-antd/i18n';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
@@ -57,7 +57,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DefaultInterceptor } from '@core';
 
 const INTERCEPTOR_PROVIDES = [
-  { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true }
 ];
 // #endregion

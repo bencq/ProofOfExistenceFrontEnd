@@ -1,0 +1,73 @@
+<page-header [title]="'存证浏览器'">展示存证明细信息</page-header>
+<nz-row>
+  <nz-col [nzSpan]="0"> </nz-col>
+  <nz-col [nzSpan]="24">
+    <nz-card [nzBodyStyle]="{ 'border-color': 'silver' }">
+      <nz-row [nzGutter]="0">
+        <nz-col [nzSpan]="24">
+          <nz-descriptions nzTitle="存证交易明细" nzBordered nzSize="small" [nzColumn]="1">
+            <nz-descriptions-item nzTitle="存证用户">
+              <nz-skeleton [nzTitle]="false" [nzParagraph]="{ rows: 1, width: '100%' }" [nzActive]="true" [nzLoading]="loading">
+                {{ username }}
+              </nz-skeleton>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="存证ID">
+              <nz-skeleton [nzTitle]="false" [nzParagraph]="{ rows: 1, width: '100%' }" [nzActive]="true" [nzLoading]="loading">
+                {{ evidenceID }}
+              </nz-skeleton>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="存证地址">
+              <nz-skeleton [nzTitle]="false" [nzParagraph]="{ rows: 1, width: '100%' }" [nzActive]="true" [nzLoading]="loading">
+                {{ evidenceAddress }}
+              </nz-skeleton>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="存证时间">
+              <nz-skeleton [nzTitle]="false" [nzParagraph]="{ rows: 1, width: '100%' }" [nzActive]="true" [nzLoading]="loading">
+                {{ timestamp }}
+              </nz-skeleton>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="内容哈希">
+              <nz-skeleton [nzTitle]="false" [nzParagraph]="{ rows: 1, width: '100%' }" [nzActive]="true" [nzLoading]="loading"
+                >{{ evidenceHash }}
+              </nz-skeleton>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="交易哈希">
+              <nz-skeleton [nzTitle]="false" [nzParagraph]="{ rows: 1, width: '100%' }" [nzActive]="true" [nzLoading]="loading">
+                {{ transactionHash }}
+              </nz-skeleton>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="区块高度">
+              <nz-skeleton [nzTitle]="false" [nzParagraph]="{ rows: 1, width: '100%' }" [nzActive]="true" [nzLoading]="loading">
+                {{ blockNumber }}
+              </nz-skeleton>
+            </nz-descriptions-item>
+          </nz-descriptions>
+        </nz-col>
+      </nz-row>
+    </nz-card>
+    <nz-card nzTitle="">
+      <h3><b>存证信息明细</b></h3>
+      <nz-row [nzGutter]="0">
+        <nz-col [nzSpan]="8">
+          <h4>存证名称</h4>
+          <div id="square" style="padding: 10px 20px 10px 20px">
+            <nz-skeleton [nzTitle]="false" [nzParagraph]="{ rows: 1, width: '100%' }" [nzActive]="true" [nzLoading]="loading">
+              {{ textData }}
+            </nz-skeleton>
+          </div>
+        </nz-col>
+      </nz-row>
+      <nz-row [nzGutter]="0">
+        <nz-col [nzSpan]="24">
+          <h4>存证内容</h4>
+          <div id="square" style="padding: 20px">
+            <nz-skeleton [nzTitle]="false" [nzActive]="true" [nzLoading]="loading">
+              {{ textData }}
+            </nz-skeleton>
+          </div>
+        </nz-col>
+      </nz-row>
+    </nz-card>
+  </nz-col>
+  <nz-col [nzSpan]="0"> </nz-col>
+</nz-row>

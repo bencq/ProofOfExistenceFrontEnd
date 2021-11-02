@@ -9,11 +9,12 @@
             <nz-radio-group formControlName="contentType" (ngModelChange)="contentTypeChanged($event)">
               <label nz-radio [nzValue]="contentTypeValues[0]">存证地址</label>
               <label nz-radio [nzValue]="contentTypeValues[1]">存证ID</label>
+              <label nz-radio [nzValue]="contentTypeValues[2]">存证名称</label>
             </nz-radio-group>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-control [nzErrorTip]="'请输入正确的' + (contentType.value === contentTypeValues[0] ? '存证地址' : '存证ID')">
+          <nz-form-control [nzErrorTip]="'请输入正确的' + contentDataErrorTip()">
             <textarea nz-input formControlName="contentData" [nzAutosize]="{ minRows: 14 }" placeholder="..."></textarea>
           </nz-form-control>
         </nz-form-item>
@@ -33,13 +34,13 @@
       </nz-col> -->
     </nz-row>
   </nz-card>
-  <nz-card nzTitle="确认">
+  <nz-card nzTitle="">
     <nz-row [nzGutter]="0">
       <nz-col [nzSm]="24">
         <nz-form-item>
           <!-- <nz-form-label nzFor="name"></nz-form-label> -->
           <nz-form-control nzErrorTip="---">
-            <button nz-button nzType="primary" [disabled]="form.invalid" type="submit" [nzLoading]="submitting">获取</button>
+            <button nz-button nzSize="large" nzType="primary" [disabled]="form.invalid" type="submit" [nzLoading]="submitting">获取</button>
             <!-- <button nz-button class="ml-sm">保存</button> -->
           </nz-form-control>
         </nz-form-item>

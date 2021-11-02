@@ -17,24 +17,24 @@ import { environment } from '@env/environment';
           <i nz-icon nzType="lock"></i>
         </a>
       </layout-default-header-item>
-      <layout-default-header-item direction="left" hidden="pc">
+      <!-- <layout-default-header-item direction="left" hidden="pc">
         <div layout-default-header-item-trigger (click)="searchToggleStatus = !searchToggleStatus">
           <i nz-icon nzType="search"></i>
         </div>
       </layout-default-header-item>
       <layout-default-header-item direction="middle">
         <header-search class="alain-default__search" [(toggleChange)]="searchToggleStatus"></header-search>
-      </layout-default-header-item>
+      </layout-default-header-item> -->
       <!-- <layout-default-header-item direction="right">
         <header-notify></header-notify>
       </layout-default-header-item> -->
       <!-- <layout-default-header-item direction="right" hidden="mobile">
         <header-task></header-task>
       </layout-default-header-item> -->
-      <layout-default-header-item direction="right" hidden="mobile">
+      <!-- <layout-default-header-item direction="right" hidden="mobile">
         <header-icon></header-icon>
-      </layout-default-header-item>
-      <layout-default-header-item direction="right" hidden="mobile">
+      </layout-default-header-item> -->
+      <!-- <layout-default-header-item direction="right" hidden="mobile">
         <div layout-default-header-item-trigger nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
           <i nz-icon nzType="setting"></i>
         </div>
@@ -54,7 +54,7 @@ import { environment } from '@env/environment';
             </div>
           </div>
         </nz-dropdown-menu>
-      </layout-default-header-item>
+      </layout-default-header-item> -->
       <layout-default-header-item direction="right">
         <header-user></header-user>
       </layout-default-header-item>

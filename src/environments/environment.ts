@@ -8,7 +8,7 @@ import { Environment } from '@delon/theme';
 import * as MOCKDATA from '../../_mock';
 
 export const environment = {
-  production: false,
+  production: true,
   useHash: true,
   api: {
     baseUrl: './',

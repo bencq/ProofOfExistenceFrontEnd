@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { STChange, STColumn, STComponent, STData } from '@delon/abc/st';
 import { _HttpClient } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -17,7 +18,7 @@ export class SearchEvidenceDirectComponent implements OnInit {
     // pi: number;
     // ps: number;
     apiName: string;
-    username: string;
+    // username: string;
     sorter: string;
     blockNumber: number | null;
     dateRange: Date[] | null;
@@ -25,7 +26,7 @@ export class SearchEvidenceDirectComponent implements OnInit {
     // pi: 1,
     // ps: 10,
     apiName: 'searchEvidence',
-    username: '',
+    // username: '',
     sorter: '',
     blockNumber: null,
     dateRange: null
@@ -47,9 +48,10 @@ export class SearchEvidenceDirectComponent implements OnInit {
   @ViewChild('st', { static: true })
   st!: STComponent;
   columns: STColumn[] = [
-    { title: '', index: 'key', type: 'checkbox' },
+    // { title: '', index: 'key', type: 'checkbox' },
+    { title: '存证名称', index: 'evidenceName', sort: true },
     { title: '存证ID', index: 'evidenceID', sort: true },
-    { title: '上链用户', index: 'username' },
+    // { title: '上链用户', index: 'username' },
     {
       title: '上链时间',
       index: 'timestamp',
@@ -68,71 +70,43 @@ export class SearchEvidenceDirectComponent implements OnInit {
           hour12: false
         }).format(timestamp);
         let ts = `${date} ${time}`;
-        console.log(ts);
         return ts;
       }
     },
     { title: '区块高度', index: 'blockNumber', sort: true },
-    { title: '交易哈希', index: 'transactionHash' },
+    // { title: '交易哈希', index: 'transactionHash' },
     { title: '存证地址', index: 'evidenceAddress' },
     {
-      title: '存证内容&哈希',
-      index: 'textData',
+      title: '详情',
       buttons: [
         {
           text: '详情',
-          type: 'drawer',
-          drawer: {
-            title: '存证内容&哈希',
-            component: drawerTextDataComponent,
-            params: record => {
-              return {
-                textData: record.textData,
-                evidenceHash: record.evidenceHash
-              };
-            },
-            drawerOptions: { nzWidth: 512 }
+          tooltip: '点击跳转至存证浏览器查看该存证',
+          type: 'link',
+          click: (record: STData, modal?: any, instance?: STComponent) => {
+            return `/explore-evidence/direct/${record.evidenceAddress}`;
           }
         }
       ]
     }
-    // { title: '内容哈希', buttons: [{ text: '详情', type: 'drawer', drawer: { title: '内容哈希' } }] }
     // {
-    //   title: '服务调用次数',
-    //   index: 'callNo',
-    //   type: 'number',
-    //   format: item => `${item.callNo} 万`,
-    //   sort: {
-    //     compare: (a, b) => a.callNo - b.callNo
-    //   }
-    // },
-    // {
-    //   title: '状态',
-    //   index: 'status',
-    //   render: 'status',
-    //   filter: {
-    //     menus: this.status,
-    //     fn: (filter, record) => record.status === filter.index
-    //   }
-    // },
-    // {
-    //   title: '更新时间',
-    //   index: 'updatedAt',
-    //   type: 'date',
-    //   sort: {
-    //     compare: (a, b) => a.updatedAt - b.updatedAt
-    //   }
-    // },
-    // {
-    //   title: '操作',
+    //   title: '存证内容&哈希',
+    //   index: 'textData',
     //   buttons: [
     //     {
-    //       text: '配置',
-    //       click: item => this.msg.success(`配置${item.no}`)
-    //     },
-    //     {
-    //       text: '订阅警报',
-    //       click: item => this.msg.success(`订阅警报${item.no}`)
+    //       text: '详情',
+    //       type: 'drawer',
+    //       drawer: {
+    //         title: '存证内容&哈希',
+    //         component: drawerTextDataComponent,
+    //         params: record => {
+    //           return {
+    //             textData: record.textData,
+    //             evidenceHash: record.evidenceHash
+    //           };
+    //         },
+    //         drawerOptions: { nzWidth: 512 }
+    //       }
     //     }
     //   ]
     // }

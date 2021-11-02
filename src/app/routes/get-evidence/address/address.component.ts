@@ -30,15 +30,23 @@ export class GetEvidenceAddressComponent implements OnInit {
 
   isLoading = true;
   optionList: string[] = [];
-  contentTypeValues: string[] = ['evidenceAddress', 'evidenceID'];
+  readonly contentTypeValues: string[] = ['evidenceAddress', 'evidenceID', 'evidenceName'];
+  readonly contentData2Chinese: { [key: string]: string } = {
+    evidenceAddress: '存证地址',
+    evidenceID: '存证ID',
+    evidenceName: '存证名称'
+  };
 
   cotentDataValidator = (control: FormControl): { [s: string]: boolean } => {
+    console.log(this);
     if (!control.value) {
       return { error: true, required: true };
     } else {
       if (this.contentType.value === this.contentTypeValues[0]) {
         return {};
       } else if (this.contentType.value === this.contentTypeValues[1] && /^\+?(0|[1-9]\d*)$/.test(control.value.trim())) {
+        return {};
+      } else if (this.contentType.value === this.contentTypeValues[2]) {
         return {};
       } else {
         return { error: true };
@@ -56,7 +64,7 @@ export class GetEvidenceAddressComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      contentData: [null, [Validators.required]],
+      contentData: [null, [this.cotentDataValidator]],
       contentType: [this.contentTypeValues[0], [Validators.required]]
       // username: [null, [Validators.required]]
     });
@@ -77,9 +85,13 @@ export class GetEvidenceAddressComponent implements OnInit {
 
   contentTypeChanged(ra: any): void {
     console.log(ra);
-    this.contentData.setValidators([Validators.required, this.cotentDataValidator]);
+    // this.contentData.setValidators([Validators.required, this.cotentDataValidator]);
     this.contentData.markAsDirty();
     this.contentData.updateValueAndValidity();
+  }
+
+  contentDataErrorTip(): string {
+    return this.contentData2Chinese[this.contentType.value];
   }
 
   submit(): void {
@@ -97,7 +109,7 @@ export class GetEvidenceAddressComponent implements OnInit {
         this.submitting = false;
         this.cdr.detectChanges();
         if (res.status !== 0) {
-          this.modal.create({
+          this.modal.error({
             nzTitle: '获取结果',
             nzContent: ResultErrorComponent,
             nzCentered: true,
@@ -110,13 +122,15 @@ export class GetEvidenceAddressComponent implements OnInit {
             }
           });
         } else {
-          this.modal.create({
+          this.modal.success({
             nzTitle: '获取结果',
             nzContent: ResultSuccessComponent,
             nzCentered: true,
             nzComponentParams: {
               username: res.data.username,
+              evidenceName: res.data.evidenceName,
               evidenceID: res.data.evidenceID,
+              evidenceAddress: res.data.evidenceAddress,
               timestamp: (() => {
                 let timestamp = new Date(res.data.timestamp);
                 let date = new Intl.DateTimeFormat(undefined, {
@@ -133,7 +147,7 @@ export class GetEvidenceAddressComponent implements OnInit {
                 let ts = `${date} ${time}`;
                 return ts;
               })(),
-              textData: res.data.textData,
+              // textData: res.data.textData,
               evidenceHash: res.data.evidenceHash,
               transactionHash: res.data.transactionHash,
               blockNumber: res.data.blockNumber
@@ -155,6 +169,7 @@ export class GetEvidenceAddressComponent implements OnInit {
     }
   }
 }
+
 @Component({
   selector: 'app-result-success',
   template: `
@@ -162,51 +177,40 @@ export class GetEvidenceAddressComponent implements OnInit {
       <div nz-result-content>
         <nz-descriptions nzTitle="存证信息" nzBordered [nzColumn]="1">
           <nz-descriptions-item nzTitle="存证用户">{{ username }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="存证名称">{{ evidenceName }}</nz-descriptions-item>
           <nz-descriptions-item nzTitle="存证ID">{{ evidenceID }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="存证地址">
+            <a
+              nz-tooltip
+              nzTooltipTitle="点击跳转至存证浏览器查看该存证"
+              [href]="'/#/explore-evidence/direct/' + evidenceAddress"
+              target="_blank"
+            >
+              {{ evidenceAddress }}
+            </a>
+          </nz-descriptions-item>
           <nz-descriptions-item nzTitle="存证时间">{{ timestamp }}</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="存证内容">{{ textData }}</nz-descriptions-item>
+          <!-- <nz-descriptions-item nzTitle="存证内容">{{ textData }}</nz-descriptions-item> -->
           <nz-descriptions-item nzTitle="内容哈希"> {{ evidenceHash }} </nz-descriptions-item>
           <nz-descriptions-item nzTitle="交易哈希">{{ transactionHash }}</nz-descriptions-item>
           <nz-descriptions-item nzTitle="区块高度">{{ blockNumber }}</nz-descriptions-item>
         </nz-descriptions>
-        <!-- <div class="desc">
-          <p nz-paragraph
-            ><code><b>存证用户：</b></code> {{ username }}</p
-          >
-          <p nz-paragraph
-            ><code><b>存证ID：</b></code> {{ evidenceID }}</p
-          >
-          <p nz-paragraph
-            ><code><b>存证时间：</b></code> {{ timestamp }}</p
-          >
-          <p nz-paragraph
-            ><code><b>存证内容：</b></code> {{ textData }}</p
-          >
-          <p nz-paragraph
-            ><code><b>内容哈希：</b></code> {{ evidenceHash }}</p
-          >
-          <p nz-paragraph
-            ><code><b>交易哈希：</b></code> {{ transactionHash }}</p
-          >
-          <p nz-paragraph
-            ><code><b>区块高度：</b></code> {{ blockNumber }}</p
-          >
-        </div> -->
       </div>
     </nz-result>
   `
 })
 export class ResultSuccessComponent {
   @Input() username?: string;
+  @Input() evidenceName?: string;
   @Input() evidenceID?: string;
+  @Input() evidenceAddress?: string;
   @Input() timestamp?: string;
-  @Input() textData?: string;
+  // @Input() textData?: string;
   @Input() evidenceHash?: string;
   @Input() transactionHash?: string;
   @Input() blockNumber?: string;
   // @Input() signatures?: string[];
 }
-
 @Component({
   selector: 'app-result-error',
   template: `

@@ -56,7 +56,7 @@ export class VerifyEvidenceDirectComponent implements OnInit {
         this.submitting = false;
         this.cdr.detectChanges();
         if (res.status !== 0) {
-          this.modal.create({
+          this.modal.error({
             nzTitle: '验证结果',
             nzContent: ResultErrorComponent,
             nzCentered: true,
@@ -69,7 +69,7 @@ export class VerifyEvidenceDirectComponent implements OnInit {
             }
           });
         } else {
-          this.modal.create({
+          this.modal.success({
             nzTitle: '验证结果',
             nzContent: ResultSuccessComponent,
             nzCentered: true,

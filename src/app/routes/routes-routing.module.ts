@@ -34,7 +34,11 @@ const routes: Routes = [
       { path: 'verify-evidence', loadChildren: () => import('./verify-evidence/verify-evidence.module').then(m => m.VerifyEvidenceModule) },
       { path: 'get-evidence', loadChildren: () => import('./get-evidence/get-evidence.module').then(m => m.GetEvidenceModule) },
       { path: 'search-evidence', loadChildren: () => import('./search-evidence/search-evidence.module').then(m => m.SearchEvidenceModule) },
-      { path: 'overview', loadChildren: () => import('./overview/overview.module').then(m => m.OverviewModule) }
+      { path: 'overview', loadChildren: () => import('./overview/overview.module').then(m => m.OverviewModule) },
+      {
+        path: 'explore-evidence',
+        loadChildren: () => import('./explore-evidence/explore-evidence.module').then(m => m.ExploreEvidenceModule)
+      }
     ]
   },
   // Blak Layout 空白布局

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService, _HttpClient } from '@delon/theme';
+import { copy } from '@delon/util/browser';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
@@ -10,10 +11,11 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 })
 export class PostEvidenceDirectComponent implements OnInit {
   form!: FormGroup;
-  submitting = false;
+  submitting: boolean = false;
+  isLoading: boolean = true;
+  // optionList: string[] = [];
 
-  isLoading = true;
-  optionList: string[] = [];
+  readonly evidenceNameMaxChar = 16;
 
   constructor(
     private fb: FormBuilder,
@@ -26,26 +28,73 @@ export class PostEvidenceDirectComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       textData: [null, [Validators.required]],
-      username: [null, [Validators.required]]
+      evidenceNameChecked: [false, [Validators.required]],
+      evidenceName: [null, []]
     });
-    this.optionList.push(this.settings.user.username!);
+    this.evidenceName.setValidators([Validators.nullValidator, this.evidenceNameValidator]);
+    this.evidenceName.disable({ onlySelf: true, emitEvent: false });
+    // this.optionList.push(this.settings.user.username!);
   }
+
+  evidenceNameValidator = (control: FormControl): { [s: string]: boolean } => {
+    console.log(this);
+    if (control.value) {
+      if (/^\S{1,16}$/.test(control.value)) {
+        return {};
+      } else {
+        return { error: true };
+      }
+    } else {
+      if (this.evidenceNameChecked.value) {
+        return { error: true, required: true };
+      } else {
+        return {};
+      }
+    }
+  };
 
   get textData(): AbstractControl {
     return this.form.controls.textData;
   }
 
-  get username(): AbstractControl {
-    return this.form.controls.username;
+  get evidenceNameChecked(): AbstractControl {
+    return this.form.controls.evidenceNameChecked;
+  }
+
+  get evidenceName(): AbstractControl {
+    return this.form.controls.evidenceName;
+  }
+
+  // get username(): AbstractControl {
+  //   return this.form.controls.username;
+  // }
+
+  evidenceNameCheckboxChanged(ra: any) {
+    this.evidenceNameChecked.markAsDirty();
+    this.evidenceNameChecked.updateValueAndValidity();
+    this.evidenceName.markAsDirty();
+    this.evidenceName.updateValueAndValidity();
+    if (!this.evidenceNameChecked.value) {
+      this.evidenceName.disable({ onlySelf: true, emitEvent: false });
+    } else {
+      this.evidenceName.enable({ onlySelf: true, emitEvent: false });
+    }
+  }
+
+  onCopy(v?: string): void {
+    if (v) {
+      copy(v);
+    }
   }
 
   submit(): void {
-    console.log(this.username, this.textData);
+    // console.log(this.username, this.textData);
     this.submitting = true;
     this.http
       .post('exportedAPI/v1', {
         apiName: 'postEvidence',
-        username: this.username.value,
+        // username: this.username.value,
+        evidenceName: this.evidenceName.value,
         textData: this.textData.value
       })
       .pipe()
@@ -54,7 +103,7 @@ export class PostEvidenceDirectComponent implements OnInit {
         this.submitting = false;
         this.cdr.detectChanges();
         if (res.status !== 0) {
-          this.modal.create({
+          this.modal.error({
             nzTitle: '上链结果',
             nzContent: ResultErrorComponent,
             nzCentered: true,
@@ -67,12 +116,12 @@ export class PostEvidenceDirectComponent implements OnInit {
             }
           });
         } else {
-          this.modal.create({
+          this.modal.success({
             nzTitle: '上链结果',
             nzContent: ResultSuccessComponent,
             nzCentered: true,
             nzComponentParams: {
-              username: this.username.value,
+              username: this.settings.user.username,
               timestamp: (() => {
                 let timestamp = new Date(res.data.timestamp);
                 let date = new Intl.DateTimeFormat(undefined, {
@@ -91,10 +140,12 @@ export class PostEvidenceDirectComponent implements OnInit {
               })(),
               blockNumber: res.data.blockNumber,
               transactionHash: res.data.transactionHash,
+              evidenceName: this.evidenceName.value,
               evidenceID: res.data.evidenceID,
               newEvidenceAddress: res.data.newEvidenceAddress,
               textData: this.textData.value,
-              evidenceHash: res.data.evidenceHash
+              evidenceHash: res.data.evidenceHash,
+              onCopy: this.onCopy
             },
             nzWidth: (1920 * 2) / 3,
             nzOnOk: () => {
@@ -113,18 +164,63 @@ export class PostEvidenceDirectComponent implements OnInit {
     }
   }
 }
+
 @Component({
   selector: 'app-result-success',
   template: `
     <nz-result nzStatus="success" nzTitle="上链成功" nzSubTitle="数据将在永久保存在区块链上，不可篡改。">
       <div nz-result-content>
         <nz-descriptions nzTitle="存证信息" nzBordered [nzColumn]="1">
-          <nz-descriptions-item nzTitle="存证用户">{{ username }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="存证用户">
+            {{ username }}
+          </nz-descriptions-item>
           <nz-descriptions-item nzTitle="存证时间">{{ timestamp }}</nz-descriptions-item>
           <nz-descriptions-item nzTitle="区块高度">{{ blockNumber }}</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="交易哈希">{{ transactionHash }}</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="存证ID">{{ evidenceID }}</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="存证地址：">{{ newEvidenceAddress }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="交易哈希">
+            {{ transactionHash }}
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="存证名称">
+            <nz-row [nzGutter]="0">
+              <nz-col [nzSpan]="20">
+                <b style="color: 'red'">{{ evidenceName }}</b>
+              </nz-col>
+              <nz-col [nzSpan]="2"> </nz-col>
+              <nz-col [nzSpan]="2" style="text-align:right">
+                <a nz-tooltip nzTooltipTitle="点击复制到剪切板" (click)="onCopy(evidenceName)" *ngIf="evidenceName">复制</a>
+              </nz-col>
+            </nz-row>
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="存证ID">
+            <nz-row [nzGutter]="0">
+              <nz-col [nzSpan]="20">
+                <b style="color: 'red'">{{ evidenceID }}</b>
+              </nz-col>
+              <nz-col [nzSpan]="2"> </nz-col>
+              <nz-col [nzSpan]="2" style="text-align:right">
+                <a nz-tooltip nzTooltipTitle="点击复制到剪切板" (click)="onCopy(evidenceID)">复制</a>
+              </nz-col>
+            </nz-row>
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="存证地址：">
+            <nz-row [nzGutter]="0">
+              <nz-col [nzSpan]="20">
+                <a
+                  nz-tooltip
+                  nzTooltipTitle="点击跳转至存证浏览器查看该存证"
+                  [href]="'/#/explore-evidence/direct/' + newEvidenceAddress"
+                  target="_blank"
+                >
+                  <b>
+                    {{ newEvidenceAddress }}
+                  </b>
+                </a>
+              </nz-col>
+              <nz-col [nzSpan]="2"> </nz-col>
+              <nz-col [nzSpan]="2" style="text-align:right">
+                <a nz-tooltip nzTooltipTitle="点击复制到剪切板" (click)="onCopy(newEvidenceAddress)">复制</a>
+              </nz-col>
+            </nz-row>
+          </nz-descriptions-item>
           <nz-descriptions-item nzTitle="存证内容">{{ textData }}</nz-descriptions-item>
           <nz-descriptions-item nzTitle="内容哈希"> {{ evidenceHash }} </nz-descriptions-item>
         </nz-descriptions>
@@ -137,10 +233,13 @@ export class ResultSuccessComponent {
   @Input() timestamp?: string;
   @Input() blockNumber?: number;
   @Input() transactionHash?: string;
+  @Input() evidenceName?: string;
   @Input() evidenceID?: string;
   @Input() newEvidenceAddress?: string;
   @Input() textData?: string;
   @Input() evidenceHash?: string;
+
+  @Input() onCopy!: (v?: string) => void;
 }
 
 @Component({

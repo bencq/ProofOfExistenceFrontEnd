@@ -1,0 +1,64 @@
+<page-header [title]="'上链存证'" [autoBreadcrumb]="false"></page-header>
+
+<form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+  <nz-card [nzTitle]="nzCardTitle" [nzBorderless]="false" [nzBodyStyle]="{ 'border-color': 'silver' }">
+    <ng-template #nzCardTitle>
+      <h3>动态表单存证</h3>
+      <nz-card-meta nzDescription="自定义表单项，进行存证"> </nz-card-meta>
+    </ng-template>
+
+    <nz-form-item *ngFor="let control of listOfControl; let i = index">
+      <nz-form-label [nzSpan]="2" [nzFor]="control.itemKey"> 项目 </nz-form-label>
+      <nz-form-control [nzSpan]="22" nzErrorTip="请输入项目的键">
+        <input
+          class="item-input"
+          nz-input
+          placeholder="..."
+          [attr.id]="control.id"
+          autocomplete="off"
+          [formControlName]="control.itemKey"
+        />
+      </nz-form-control>
+      <nz-form-label [nzSpan]="2" [nzFor]="control.itemValue"> 值 </nz-form-label>
+      <nz-form-control [nzSpan]="22" nzErrorTip="请输入项目的值">
+        <input
+          class="item-input"
+          nz-input
+          placeholder="..."
+          [attr.id]="control.id"
+          autocomplete="off"
+          [formControlName]="control.itemValue"
+        />
+        <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <div nz-col [nzSpan]="4"></div>
+      <nz-form-control [nzSpan]="20">
+        <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
+          <i nz-icon nzType="plus"></i>
+          增加项目
+        </button>
+      </nz-form-control>
+      <div nz-col [nzSpan]="4"></div>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>
+        <label nz-checkbox formControlName="evidenceNameChecked" (ngModelChange)="evidenceNameCheckboxChanged($event)">存证名称</label>
+      </nz-form-label>
+
+      <nz-form-control
+        nzFor="evidenceName"
+        [nzErrorTip]="'请输入存证的名称，最多' + evidenceNameMaxChar + '字符，不能包含空格'"
+        [nzSpan]="8"
+      >
+        <input nz-input formControlName="evidenceName" placeholder="" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+        <button nz-button nzSize="large" nzType="primary" [nzLoading]="submitting">提交</button>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-card>
+</form>

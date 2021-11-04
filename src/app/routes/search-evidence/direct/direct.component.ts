@@ -19,6 +19,7 @@ export class SearchEvidenceDirectComponent implements OnInit {
     // ps: number;
     apiName: string;
     // username: string;
+    evidenceName: string | null;
     sorter: string;
     blockNumber: number | null;
     dateRange: Date[] | null;
@@ -26,6 +27,7 @@ export class SearchEvidenceDirectComponent implements OnInit {
     // pi: 1,
     // ps: 10,
     apiName: 'searchEvidence',
+    evidenceName: null,
     // username: '',
     sorter: '',
     blockNumber: null,
@@ -51,7 +53,9 @@ export class SearchEvidenceDirectComponent implements OnInit {
     // { title: '', index: 'key', type: 'checkbox' },
     { title: '存证名称', index: 'evidenceName', sort: true },
     { title: '存证ID', index: 'evidenceID', sort: true },
+    { title: '存证地址', index: 'evidenceAddress', width: '40%' },
     // { title: '上链用户', index: 'username' },
+    { title: '区块高度', index: 'blockNumber', sort: true, width: '8%' },
     {
       title: '上链时间',
       index: 'timestamp',
@@ -73,11 +77,11 @@ export class SearchEvidenceDirectComponent implements OnInit {
         return ts;
       }
     },
-    { title: '区块高度', index: 'blockNumber', sort: true },
     // { title: '交易哈希', index: 'transactionHash' },
-    { title: '存证地址', index: 'evidenceAddress' },
+
     {
       title: '详情',
+      width: '80px',
       buttons: [
         {
           text: '详情',
@@ -91,17 +95,17 @@ export class SearchEvidenceDirectComponent implements OnInit {
     }
     // {
     //   title: '存证内容&哈希',
-    //   index: 'textData',
+    //   index: 'evidenceData',
     //   buttons: [
     //     {
     //       text: '详情',
     //       type: 'drawer',
     //       drawer: {
     //         title: '存证内容&哈希',
-    //         component: drawerTextDataComponent,
+    //         component: drawerEvidenceDataComponent,
     //         params: record => {
     //           return {
-    //             textData: record.textData,
+    //             evidenceData: record.evidenceData,
     //             evidenceHash: record.evidenceHash
     //           };
     //         },
@@ -165,10 +169,10 @@ export class SearchEvidenceDirectComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-drawer-textData',
+  selector: 'app-drawer-evidenceData',
   template: `
     <nz-card style="width:100%; " nzTitle="存证内容">
-      {{ textData }}
+      {{ evidenceData }}
     </nz-card>
     <nz-divider></nz-divider>
     <nz-card style="width:100%; " nzTitle="存证哈希"> {{ evidenceHash }} </nz-card>
@@ -178,8 +182,8 @@ export class SearchEvidenceDirectComponent implements OnInit {
     </div>
   `
 })
-export class drawerTextDataComponent {
-  @Input() textData: NzSafeAny;
+export class drawerEvidenceDataComponent {
+  @Input() evidenceData: NzSafeAny;
   @Input() evidenceHash: NzSafeAny;
 
   constructor(private ref: NzDrawerRef) {}

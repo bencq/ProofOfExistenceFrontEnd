@@ -1,13 +1,13 @@
-<page-header [title]="'上链验证'">输入数据，验证数据是否已经上链</page-header>
+<page-header [title]="'上链验证'" [autoBreadcrumb]="false">输入数据，验证数据是否已经上链</page-header>
 
 <form nz-form [formGroup]="form" (ngSubmit)="submit()" [nzLayout]="'vertical'" labelWidth="200">
   <nz-card nzTitle="上链验证" [nzBodyStyle]="{ 'border-color': 'silver' }">
     <nz-row [nzGutter]="0">
       <nz-col [nzSpan]="18">
         <nz-form-item>
-          <nz-form-label nzFor="textData"><i nz-icon [nzType]="'file'"></i>验证数据</nz-form-label>
+          <nz-form-label nzFor="evidenceData"><i nz-icon [nzType]="'file'"></i>验证数据</nz-form-label>
           <nz-form-control nzErrorTip="请输入需要验证的数据">
-            <textarea nz-input formControlName="textData" [nzAutosize]="{ minRows: 16 }" placeholder="..."></textarea>
+            <textarea nz-input formControlName="evidenceData" [nzAutosize]="{ minRows: 16 }" placeholder="..."></textarea>
           </nz-form-control>
         </nz-form-item>
       </nz-col>

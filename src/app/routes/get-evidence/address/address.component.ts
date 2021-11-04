@@ -147,7 +147,7 @@ export class GetEvidenceAddressComponent implements OnInit {
                 let ts = `${date} ${time}`;
                 return ts;
               })(),
-              // textData: res.data.textData,
+              // evidenceData: res.data.evidenceData,
               evidenceHash: res.data.evidenceHash,
               transactionHash: res.data.transactionHash,
               blockNumber: res.data.blockNumber
@@ -190,7 +190,7 @@ export class GetEvidenceAddressComponent implements OnInit {
             </a>
           </nz-descriptions-item>
           <nz-descriptions-item nzTitle="存证时间">{{ timestamp }}</nz-descriptions-item>
-          <!-- <nz-descriptions-item nzTitle="存证内容">{{ textData }}</nz-descriptions-item> -->
+          <!-- <nz-descriptions-item nzTitle="存证内容">{{ evidenceData }}</nz-descriptions-item> -->
           <nz-descriptions-item nzTitle="内容哈希"> {{ evidenceHash }} </nz-descriptions-item>
           <nz-descriptions-item nzTitle="交易哈希">{{ transactionHash }}</nz-descriptions-item>
           <nz-descriptions-item nzTitle="区块高度">{{ blockNumber }}</nz-descriptions-item>
@@ -205,7 +205,7 @@ export class ResultSuccessComponent {
   @Input() evidenceID?: string;
   @Input() evidenceAddress?: string;
   @Input() timestamp?: string;
-  // @Input() textData?: string;
+  // @Input() evidenceData?: string;
   @Input() evidenceHash?: string;
   @Input() transactionHash?: string;
   @Input() blockNumber?: string;

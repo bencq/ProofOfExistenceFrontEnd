@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "{placeholder-production-name}",
-    "description": "{placeholder-production-name} proof of existence system"
+    "name": "production.name | i18n",
+    "description": "production.name | i18n proof of existence system"
   },
   "user": {
     "username": "Admin",
@@ -27,6 +27,10 @@
             {
               "text": "直接上链存证",
               "link": "/post-evidence/direct"
+            },
+            {
+              "text": "动态表单存证",
+              "link": "/post-evidence/dynamic-form"
             }
           ]
         },

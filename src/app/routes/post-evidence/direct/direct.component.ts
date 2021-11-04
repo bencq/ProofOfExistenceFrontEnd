@@ -27,7 +27,7 @@ export class PostEvidenceDirectComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      textData: [null, [Validators.required]],
+      evidenceData: [null, [Validators.required]],
       evidenceNameChecked: [false, [Validators.required]],
       evidenceName: [null, []]
     });
@@ -53,8 +53,8 @@ export class PostEvidenceDirectComponent implements OnInit {
     }
   };
 
-  get textData(): AbstractControl {
-    return this.form.controls.textData;
+  get evidenceData(): AbstractControl {
+    return this.form.controls.evidenceData;
   }
 
   get evidenceNameChecked(): AbstractControl {
@@ -88,14 +88,25 @@ export class PostEvidenceDirectComponent implements OnInit {
   }
 
   submit(): void {
-    // console.log(this.username, this.textData);
+    // console.log(this.username, this.evidenceData);
     this.submitting = true;
+    Object.keys(this.form.controls).forEach(key => {
+      this.form.controls[key].markAsDirty();
+      this.form.controls[key].updateValueAndValidity();
+      console.log(key, this.form.controls[key].value);
+    });
+    if (this.form.invalid) {
+      this.submitting = false;
+      this.cdr.detectChanges();
+      return;
+    }
     this.http
       .post('exportedAPI/v1', {
         apiName: 'postEvidence',
         // username: this.username.value,
         evidenceName: this.evidenceName.value,
-        textData: this.textData.value
+        evidenceData: this.evidenceData.value,
+        evidenceType: 'text'
       })
       .pipe()
       .subscribe(res => {
@@ -143,7 +154,7 @@ export class PostEvidenceDirectComponent implements OnInit {
               evidenceName: this.evidenceName.value,
               evidenceID: res.data.evidenceID,
               newEvidenceAddress: res.data.newEvidenceAddress,
-              textData: this.textData.value,
+              // evidenceData: this.evidenceData.value,
               evidenceHash: res.data.evidenceHash,
               onCopy: this.onCopy
             },
@@ -154,14 +165,6 @@ export class PostEvidenceDirectComponent implements OnInit {
           });
         }
       });
-    Object.keys(this.form.controls).forEach(key => {
-      this.form.controls[key].markAsDirty();
-      this.form.controls[key].updateValueAndValidity();
-      console.log(key, this.form.controls[key].value);
-    });
-    if (this.form.invalid) {
-      return;
-    }
   }
 }
 
@@ -221,7 +224,7 @@ export class PostEvidenceDirectComponent implements OnInit {
               </nz-col>
             </nz-row>
           </nz-descriptions-item>
-          <nz-descriptions-item nzTitle="存证内容">{{ textData }}</nz-descriptions-item>
+          <!-- <nz-descriptions-item nzTitle="存证内容">{{ evidenceData }}</nz-descriptions-item> -->
           <nz-descriptions-item nzTitle="内容哈希"> {{ evidenceHash }} </nz-descriptions-item>
         </nz-descriptions>
       </div>
@@ -236,7 +239,7 @@ export class ResultSuccessComponent {
   @Input() evidenceName?: string;
   @Input() evidenceID?: string;
   @Input() newEvidenceAddress?: string;
-  @Input() textData?: string;
+  // @Input() evidenceData?: string;
   @Input() evidenceHash?: string;
 
   @Input() onCopy!: (v?: string) => void;

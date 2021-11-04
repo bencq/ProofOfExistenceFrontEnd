@@ -1,7 +1,16 @@
-<page-header [title]="'查询表格'"></page-header>
+<page-header [title]="'查询表格'" [autoBreadcrumb]="false">按条件查找存证信息</page-header>
 <nz-card [nzBordered]="false">
   <form nz-form (ngSubmit)="getData()" class="search__form">
     <div nz-row>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label nzFor="evidenceName">存证名称</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="queryParams.evidenceName" name="evidenceName" placeholder="请输入" id="evidenceName" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="2"></div>
       <!-- <div nz-col [nzSpan]="4">
         <nz-form-item>
           <nz-form-label nzFor="username">用户名</nz-form-label>
@@ -32,7 +41,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="16"></div>
+      <div nz-col [nzSpan]="8"></div>
     </div>
     <div nz-row>
       <div nz-col [nzSpan]="24" [class.text-right]="true">

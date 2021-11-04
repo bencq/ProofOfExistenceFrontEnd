@@ -1,7 +1,12 @@
-<page-header [title]="'存证获取'">输入存证地址，获取存证数据</page-header>
+<page-header [title]="'存证获取'" [autoBreadcrumb]="false"></page-header>
 
 <form nz-form [formGroup]="form" (ngSubmit)="submit()" [nzLayout]="'vertical'" labelWidth="200">
-  <nz-card nzTitle="存证获取" [nzBodyStyle]="{ 'border-color': 'silver' }">
+  <nz-card [nzTitle]="nzCardTitle" [nzBodyStyle]="{ 'border-color': 'silver' }">
+    <ng-template #nzCardTitle>
+      <h3>直接存证获取</h3>
+      <nz-card-meta nzDescription="输入存证凭据，获取存证数据"> </nz-card-meta>
+    </ng-template>
+
     <nz-row [nzGutter]="0">
       <nz-col [nzSpan]="24">
         <nz-form-item>

@@ -3,7 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { GetEvidenceAddressComponent } from './address/address.component';
 
-const routes: Routes = [{ path: 'address', component: GetEvidenceAddressComponent }];
+const routes: Routes = [
+  { path: 'address', component: GetEvidenceAddressComponent },
+  { path: '', redirectTo: 'address' }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

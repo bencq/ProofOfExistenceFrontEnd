@@ -25,14 +25,14 @@ export class VerifyEvidenceDirectComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      textData: [null, [Validators.required]],
+      evidenceData: [null, [Validators.required]],
       username: [null, [Validators.required]]
     });
     this.optionList.push(this.settings.user.username!);
   }
 
-  get textData(): AbstractControl {
-    return this.form.controls.textData;
+  get evidenceData(): AbstractControl {
+    return this.form.controls.evidenceData;
   }
 
   get username(): AbstractControl {
@@ -40,7 +40,7 @@ export class VerifyEvidenceDirectComponent implements OnInit {
   }
 
   submit(): void {
-    console.log(this.username, this.textData);
+    console.log(this.username, this.evidenceData);
     this.submitting = true;
     this.http
       .post('exportedAPI/v1', {
@@ -48,7 +48,7 @@ export class VerifyEvidenceDirectComponent implements OnInit {
         username: this.username.value,
         keyStorePassword: '123456',
         keyPassword: '123456',
-        evidenceAddress: this.textData.value.trim()
+        evidenceAddress: this.evidenceData.value.trim()
       })
       .pipe()
       .subscribe(res => {

@@ -1,17 +1,23 @@
-<page-header [title]="'数据上链'">简单输入数据，即可完成上链存证</page-header>
+<page-header [title]="'上链存证'" [autoBreadcrumb]="false"></page-header>
 
 <form nz-form [formGroup]="form" (ngSubmit)="submit()" [nzLayout]="'vertical'" labelWidth="200">
-  <nz-card nzTitle="数据上链" [nzBodyStyle]="{ 'border-color': 'silver' }">
+  <nz-card [nzTitle]="nzCardTitle" [nzBorderless]="false" [nzBodyStyle]="{ 'border-color': 'silver' }">
+    <ng-template #nzCardTitle>
+      <h3>直接上链存证</h3>
+      <nz-card-meta nzDescription="简单输入数据，即可完成上链存证"> </nz-card-meta>
+    </ng-template>
     <nz-row [nzGutter]="0">
       <nz-col [nzSpan]="24">
         <nz-form-item>
-          <nz-form-label nzFor="textData"><i nz-icon [nzType]="'file'"></i>上链内容</nz-form-label>
+          <nz-form-label nzFor="evidenceData"><i nz-icon [nzType]="'file'"></i>上链内容</nz-form-label>
           <nz-form-control nzErrorTip="请输入需要上链的数据">
-            <textarea nz-input formControlName="textData" [nzAutosize]="{ minRows: 16 }" placeholder="..."></textarea>
+            <textarea nz-input formControlName="evidenceData" [nzAutosize]="{ minRows: 16 }" placeholder="..."></textarea>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <label nz-checkbox formControlName="evidenceNameChecked" (ngModelChange)="evidenceNameCheckboxChanged($event)">存证名称</label>
+          <nz-form-label>
+            <label nz-checkbox formControlName="evidenceNameChecked" (ngModelChange)="evidenceNameCheckboxChanged($event)">存证名称</label>
+          </nz-form-label>
           <nz-form-control
             nzFor="evidenceName"
             [nzErrorTip]="'请输入存证的名称，最多' + evidenceNameMaxChar + '字符，不能包含空格'"

@@ -1,4 +1,4 @@
-<page-header [title]="'存证浏览器'">展示存证明细信息</page-header>
+<page-header [title]="'存证浏览器'" [autoBreadcrumb]="false">展示存证明细信息</page-header>
 <nz-row>
   <nz-col [nzSpan]="0"> </nz-col>
   <nz-col [nzSpan]="24">
@@ -52,7 +52,7 @@
           <h4>存证名称</h4>
           <div id="square" style="padding: 10px 20px 10px 20px">
             <nz-skeleton [nzTitle]="false" [nzParagraph]="{ rows: 1, width: '100%' }" [nzActive]="true" [nzLoading]="loading">
-              {{ textData }}
+              {{ evidenceName }}
             </nz-skeleton>
           </div>
         </nz-col>
@@ -61,8 +61,8 @@
         <nz-col [nzSpan]="24">
           <h4>存证内容</h4>
           <div id="square" style="padding: 20px">
-            <nz-skeleton [nzTitle]="false" [nzActive]="true" [nzLoading]="loading">
-              {{ textData }}
+            <nz-skeleton [nzTitle]="false" [nzActive]="true" [nzLoading]="loading" style="white-space: break-spaces">
+              {{ evidenceData }}
             </nz-skeleton>
           </div>
         </nz-col>

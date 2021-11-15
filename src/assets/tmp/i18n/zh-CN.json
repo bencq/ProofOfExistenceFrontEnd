@@ -153,5 +153,10 @@
 
 
   "production.name": "TrustCloud",
-  "production.desc": "基于区块链的存证云平台"
+  "production.desc": "基于区块链的存证云平台",
+
+  "text": "直接上链存证",
+  "json": "动态表单存证",
+  "file": "文件存证"
+  
 }

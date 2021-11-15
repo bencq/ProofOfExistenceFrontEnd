@@ -1,17 +1,27 @@
 <page-header [title]="'上链存证'" [autoBreadcrumb]="false"></page-header>
-
-<form nz-form [formGroup]="form" (ngSubmit)="submit()" [nzLayout]="'vertical'" labelWidth="200">
+<form nz-form [formGroup]="form" [nzLayout]="'vertical'" labelWidth="200">
   <nz-card [nzTitle]="nzCardTitle" [nzBorderless]="false" [nzBodyStyle]="{ 'border-color': 'silver' }">
     <ng-template #nzCardTitle>
-      <h3>直接上链存证</h3>
-      <nz-card-meta nzDescription="简单输入数据，即可完成上链存证"> </nz-card-meta>
+      <h3>文件存证</h3>
+      <nz-card-meta nzDescription="上传文件进行存证"> </nz-card-meta>
     </ng-template>
     <nz-row [nzGutter]="0">
       <nz-col [nzSpan]="24">
         <nz-form-item>
-          <nz-form-label nzRequired nzFor="evidenceData"><i nz-icon [nzType]="'file'"></i>上链内容</nz-form-label>
-          <nz-form-control nzErrorTip="请输入需要上链的数据">
-            <textarea nz-input formControlName="evidenceData" [nzAutosize]="{ minRows: 16 }" placeholder="..."></textarea>
+          <!-- <nz-form-label nzFor="evidenceData"><i nz-icon [nzType]="'file'"></i>上链文件</nz-form-label> -->
+
+          <nz-form-control nzErrorTip="请输入需要上链的数据" [nzSpan]="16" [nzOffset]="4">
+            <nz-upload style="width: 100%" [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" [nzFileListRender]="null">
+              <ng-template #fileListRender> 111 </ng-template>
+              <button nz-button [nzBlock]="true" style="height: 100px; font-size: x-large">
+                <i nz-icon nzType="upload"></i>
+                选择文件
+              </button>
+            </nz-upload>
+            <div *ngIf="fileList.length > 0" style="font-size: large; padding: 2px"
+              ><i nz-icon style="color: rgba(0, 0, 0, 0.45)" nzType="gold" nzTheme="outline"></i>
+              <span style="margin-left: 10px">文件大小：{{ fileList[0].size }} Bytes</span>
+            </div>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -28,6 +38,7 @@
               ></i
             ></label>
           </nz-form-label>
+
           <nz-form-control
             nzFor="evidenceName"
             [nzErrorTip]="'请输入存证的名称，最多' + evidenceNameMaxChar + '字符，不能包含空格'"
@@ -49,20 +60,6 @@
           </nz-form-control>
         </nz-form-item>
       </nz-col>
-      <nz-col [nzSpan]="1"></nz-col>
-      <!-- <nz-col [nzSpan]="1"></nz-col>
-      <nz-col [nzSpan]="5">
-        <nz-form-item>
-          <nz-form-label nzFor="username"><i nz-icon [nzType]="'user'"></i>上链用户</nz-form-label>
-          <nz-form-control nzErrorTip="请选择上链的用户">
-            <nz-select *ngIf="isLoading" [nzPlaceHolder]="'...'" formControlName="username">
-              <ng-container *ngFor="let opt of optionList">
-                <nz-option *ngIf="isLoading" [nzValue]="opt" [nzLabel]="opt"></nz-option>
-              </ng-container>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </nz-col> -->
     </nz-row>
   </nz-card>
   <nz-card nzTitle="">
@@ -71,7 +68,17 @@
         <nz-form-item>
           <!-- <nz-form-label nzFor="name"></nz-form-label> -->
           <nz-form-control nzErrorTip="---">
-            <button nz-button nzType="primary" nzSize="large" [disabled]="form.invalid" type="submit" [nzLoading]="submitting">提交</button>
+            <button
+              nz-button
+              [nzType]="'primary'"
+              nzSize="large"
+              [nzLoading]="uploading"
+              [disabled]="form.invalid || fileList.length == 0"
+              style="margin-top: 16px"
+              (click)="handleUpload()"
+            >
+              {{ uploading ? '上传中' : '提交上传' }}
+            </button>
             <!-- <button nz-button class="ml-sm">保存</button> -->
           </nz-form-control>
         </nz-form-item>

@@ -7,9 +7,10 @@ import { SharedModule } from '@shared';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { OverviewDirectComponent } from './direct/direct.component';
+import { OverviewExternalLinkComponent } from './external-link/external-link.component';
 import { OverviewRoutingModule } from './overview-routing.module';
 
-const COMPONENTS: Array<Type<void>> = [OverviewDirectComponent];
+const COMPONENTS: Array<Type<void>> = [OverviewDirectComponent, OverviewExternalLinkComponent];
 
 @NgModule({
   imports: [SharedModule, OverviewRoutingModule, G2MiniBarModule, G2CardModule, NzIconModule, QuickMenuModule],

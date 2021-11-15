@@ -9,7 +9,8 @@ import { NzModalService } from 'ng-zorro-antd/modal';
   styles: [
     '::ng-deep .ant-descriptions-item-label {width: 20%}',
     '::ng-deep .ant-skeleton-paragraph {margin-bottom: 0}',
-    'div#square {border: solid; border-width: 1px; border-color: #00000010; margin: 4px;  background-color: #00000008 }'
+    'div,.square {border: solid; border-width: 1px; border-color: #00000010; margin: 4px;  background-color: #00000008 }',
+    'i {margin-left: 4px; color: rgba(0, 0, 0, 0.45)}'
   ]
 })
 export class ExploreEvidenceDirectComponent implements OnInit {
@@ -25,6 +26,9 @@ export class ExploreEvidenceDirectComponent implements OnInit {
   blockNumber?: string;
   evidenceData?: string;
   evidenceType?: string;
+
+  fileOriginalname?: string;
+  fileSize?: string;
 
   loading: boolean = true;
 
@@ -84,6 +88,10 @@ export class ExploreEvidenceDirectComponent implements OnInit {
             this.evidenceData = JSON.stringify(JSON.parse(res.data.evidenceData), null, '\t');
           } else if (this.evidenceType === 'text') {
             this.evidenceData = res.data.evidenceData;
+          } else if (this.evidenceType === 'file') {
+            this.evidenceData = res.data.evidenceData;
+            this.fileOriginalname = res.data.file.originalname;
+            this.fileSize = res.data.file.size;
           }
 
           this.loading = false;

@@ -46,13 +46,9 @@ export class PostEvidenceDynamicFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      evidenceNameChecked: [false, [Validators.required]],
-      evidenceName: [null, []]
+      evidenceName: [null, [Validators.pattern(/^\S{0,16}$/)]]
     });
     this.addField();
-
-    this.evidenceName.setValidators([Validators.nullValidator, this.evidenceNameValidator]);
-    this.evidenceName.disable({ onlySelf: true, emitEvent: false });
   }
 
   readonly evidenceNameMaxChar = 16;
@@ -60,24 +56,6 @@ export class PostEvidenceDynamicFormComponent implements OnInit {
   form!: FormGroup;
   listOfControl: Array<{ id: number; itemKey: string; itemValue: string }> = [];
   submitting = false;
-
-  evidenceNameValidator = (control: FormControl): { [s: string]: boolean } => {
-    console.log(this);
-    if (control.value) {
-      if (/^\S{1,16}$/.test(control.value)) {
-        return {};
-      } else {
-        return { error: true };
-      }
-    } else {
-      if (this.evidenceNameChecked.value) {
-        return { error: true, required: true };
-      } else {
-        return {};
-      }
-    }
-  };
-
   onCopy(v?: string): void {
     if (v) {
       copy(v);
@@ -202,18 +180,6 @@ export class PostEvidenceDynamicFormComponent implements OnInit {
           });
         }
       });
-
-    // for (const i in this.form.controls) {
-    //   if (this.form.controls.hasOwnProperty(i)) {
-    //     this.form.controls[i].markAsDirty();
-    //     this.form.controls[i].updateValueAndValidity();
-    //   }
-    // }
-    // console.log(this.form.value);
-  }
-
-  get evidenceNameChecked(): AbstractControl {
-    return this.form.controls.evidenceNameChecked;
   }
 
   get evidenceName(): AbstractControl {
@@ -221,14 +187,7 @@ export class PostEvidenceDynamicFormComponent implements OnInit {
   }
 
   evidenceNameCheckboxChanged(ra: any) {
-    this.evidenceNameChecked.markAsDirty();
-    this.evidenceNameChecked.updateValueAndValidity();
     this.evidenceName.markAsDirty();
     this.evidenceName.updateValueAndValidity();
-    if (!this.evidenceNameChecked.value) {
-      this.evidenceName.disable({ onlySelf: true, emitEvent: false });
-    } else {
-      this.evidenceName.enable({ onlySelf: true, emitEvent: false });
-    }
   }
 }

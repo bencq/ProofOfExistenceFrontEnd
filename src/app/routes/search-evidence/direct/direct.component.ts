@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { I18NService } from '@core';
 import { STChange, STColumn, STComponent, STData } from '@delon/abc/st';
 import { _HttpClient } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -7,6 +8,8 @@ import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { map, tap } from 'rxjs/operators';
+
+import i18nJson from '../../../../assets/tmp/i18n/zh-CN.json';
 
 @Component({
   selector: 'app-search-evidence-direct',
@@ -20,6 +23,7 @@ export class SearchEvidenceDirectComponent implements OnInit {
     apiName: string;
     // username: string;
     evidenceName: string | null;
+    evidenceType: string | null;
     sorter: string;
     blockNumber: number | null;
     dateRange: Date[] | null;
@@ -28,6 +32,7 @@ export class SearchEvidenceDirectComponent implements OnInit {
     // ps: 10,
     apiName: 'searchEvidence',
     evidenceName: null,
+    evidenceType: null,
     // username: '',
     sorter: '',
     blockNumber: null,
@@ -53,6 +58,16 @@ export class SearchEvidenceDirectComponent implements OnInit {
     // { title: '', index: 'key', type: 'checkbox' },
     { title: '存证名称', index: 'evidenceName', sort: true },
     { title: '存证ID', index: 'evidenceID', sort: true },
+    {
+      title: '存证类型',
+      index: 'evidenceType',
+      width: '8%',
+      format: (item, col, index) => {
+        // return this.i18n.translate(item.evidenceType);
+        let key: 'file' | 'json' | 'text' = item.evidenceType;
+        return i18nJson[key];
+      }
+    },
     { title: '存证地址', index: 'evidenceAddress', width: '40%' },
     // { title: '上链用户', index: 'username' },
     { title: '区块高度', index: 'blockNumber', sort: true, width: '8%' },
@@ -115,13 +130,25 @@ export class SearchEvidenceDirectComponent implements OnInit {
     //   ]
     // }
   ];
+
   selectedRows: STData[] = [];
   description = '';
 
-  constructor(private http: _HttpClient, public msg: NzMessageService, private modalSrv: NzModalService, private cdr: ChangeDetectorRef) {}
+  readonly evidenceTypes = ['text', 'json', 'file'];
+
+  constructor(
+    private http: _HttpClient,
+    public msg: NzMessageService,
+    private modalSrv: NzModalService,
+    private cdr: ChangeDetectorRef,
+    private i18n: I18NService
+  ) {}
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.log(this.i18n.defaultLang);
+    // this.i18n.use('zh-CN', {});
+  }
 
   getData(): void {
     this.loading = true;

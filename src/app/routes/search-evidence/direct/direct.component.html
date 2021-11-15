@@ -6,10 +6,35 @@
         <nz-form-item>
           <nz-form-label nzFor="evidenceName">存证名称</nz-form-label>
           <nz-form-control>
-            <input nz-input [(ngModel)]="queryParams.evidenceName" name="evidenceName" placeholder="请输入" id="evidenceName" />
+            <nz-input-group [nzSuffix]="evidenceNameClearTpl">
+              <input nz-input [(ngModel)]="queryParams.evidenceName" name="evidenceName" placeholder="请输入" autocomplete="off" />
+            </nz-input-group>
+            <ng-template #evidenceNameClearTpl>
+              <i
+                nz-icon
+                class="ant-input-clear-icon"
+                nzTheme="fill"
+                nzType="close-circle"
+                *ngIf="queryParams.evidenceName"
+                (click)="queryParams.evidenceName = null"
+              ></i>
+            </ng-template>
           </nz-form-control>
         </nz-form-item>
       </div>
+      <div nz-col [nzSpan]="2"></div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label nzFor="evidenceType">存证类型</nz-form-label>
+          <nz-form-control>
+            <nz-select [(ngModel)]="queryParams.evidenceType" name="evidenceType" [nzAllowClear]="true" id="evidenceType">
+              <nz-option *ngFor="let eT of evidenceTypes" [nzValue]="eT" [nzLabel]="eT | i18n"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
       <div nz-col [nzSpan]="2"></div>
       <!-- <div nz-col [nzSpan]="4">
         <nz-form-item>
@@ -41,7 +66,6 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="8"></div>
     </div>
     <div nz-row>
       <div nz-col [nzSpan]="24" [class.text-right]="true">

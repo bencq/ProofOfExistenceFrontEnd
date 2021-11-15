@@ -8,13 +8,15 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { PostEvidenceDirectComponent, ResultErrorComponent, ResultSuccessComponent } from './direct/direct.component';
 import { PostEvidenceDynamicFormComponent } from './dynamic-form/dynamic-form.component';
+import { PostEvidenceFileComponent } from './file/file.component';
 import { PostEvidenceRoutingModule } from './post-evidence-routing.module';
 
 const COMPONENTS: Array<Type<void>> = [
   PostEvidenceDirectComponent,
   ResultSuccessComponent,
   ResultErrorComponent,
-  PostEvidenceDynamicFormComponent
+  PostEvidenceDynamicFormComponent,
+  PostEvidenceFileComponent
 ];
 
 @NgModule({

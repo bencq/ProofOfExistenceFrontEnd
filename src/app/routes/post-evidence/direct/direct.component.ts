@@ -28,37 +28,14 @@ export class PostEvidenceDirectComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       evidenceData: [null, [Validators.required]],
-      evidenceNameChecked: [false, [Validators.required]],
-      evidenceName: [null, []]
+      // evidenceNameChecked: [false, [Validators.required]],
+      evidenceName: [null, [Validators.pattern(/^\S{0,16}$/)]]
     });
-    this.evidenceName.setValidators([Validators.nullValidator, this.evidenceNameValidator]);
-    this.evidenceName.disable({ onlySelf: true, emitEvent: false });
     // this.optionList.push(this.settings.user.username!);
   }
 
-  evidenceNameValidator = (control: FormControl): { [s: string]: boolean } => {
-    console.log(this);
-    if (control.value) {
-      if (/^\S{1,16}$/.test(control.value)) {
-        return {};
-      } else {
-        return { error: true };
-      }
-    } else {
-      if (this.evidenceNameChecked.value) {
-        return { error: true, required: true };
-      } else {
-        return {};
-      }
-    }
-  };
-
   get evidenceData(): AbstractControl {
     return this.form.controls.evidenceData;
-  }
-
-  get evidenceNameChecked(): AbstractControl {
-    return this.form.controls.evidenceNameChecked;
   }
 
   get evidenceName(): AbstractControl {
@@ -68,18 +45,6 @@ export class PostEvidenceDirectComponent implements OnInit {
   // get username(): AbstractControl {
   //   return this.form.controls.username;
   // }
-
-  evidenceNameCheckboxChanged(ra: any) {
-    this.evidenceNameChecked.markAsDirty();
-    this.evidenceNameChecked.updateValueAndValidity();
-    this.evidenceName.markAsDirty();
-    this.evidenceName.updateValueAndValidity();
-    if (!this.evidenceNameChecked.value) {
-      this.evidenceName.disable({ onlySelf: true, emitEvent: false });
-    } else {
-      this.evidenceName.enable({ onlySelf: true, emitEvent: false });
-    }
-  }
 
   onCopy(v?: string): void {
     if (v) {

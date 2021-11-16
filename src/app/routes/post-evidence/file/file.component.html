@@ -11,7 +11,13 @@
           <!-- <nz-form-label nzFor="evidenceData"><i nz-icon [nzType]="'file'"></i>上链文件</nz-form-label> -->
 
           <nz-form-control nzErrorTip="请输入需要上链的数据" [nzSpan]="16" [nzOffset]="4">
-            <nz-upload style="width: 100%" [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" [nzFileListRender]="null">
+            <nz-upload
+              style="width: 100%"
+              [(nzFileList)]="fileList"
+              [nzBeforeUpload]="beforeUpload"
+              [nzFileListRender]="null"
+              (nzChange)="onUploadChange($event)"
+            >
               <ng-template #fileListRender> 111 </ng-template>
               <button nz-button [nzBlock]="true" style="height: 100px; font-size: x-large">
                 <i nz-icon nzType="upload"></i>
@@ -34,7 +40,7 @@
                 nz-icon
                 nzType="question-circle"
                 nzTheme="outline"
-                style="margin-left: 2px"
+                style="margin-left: 4px"
               ></i
             ></label>
           </nz-form-label>

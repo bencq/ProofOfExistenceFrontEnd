@@ -9,24 +9,29 @@
     <nz-row [nzGutter]="0">
       <nz-col [nzSpan]="24">
         <nz-form-item>
-          <nz-form-label nzRequired nzFor="evidenceData"><i nz-icon [nzType]="'file'"></i>上链内容</nz-form-label>
+          <nz-form-label nzRequired nzFor="evidenceData">
+            <label ngClass="mLabel">
+              <i nz-icon [nzType]="'file'"></i>
+              <span>上链内容</span>
+            </label>
+          </nz-form-label>
           <nz-form-control nzErrorTip="请输入需要上链的数据">
             <textarea nz-input formControlName="evidenceData" [nzAutosize]="{ minRows: 16 }" placeholder="..."></textarea>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label>
-            <label formControlName="evidenceName"
-              ><span [style]="{ color: evidenceName.value ? 'black' : 'rgb(0,0,0,0.25)' }">存证名称</span
-              ><i
+            <label ngClass="mLabel">
+              <span [style]="{ color: evidenceName.value ? 'black' : 'rgb(0,0,0,0.25)' }">存证名称</span>
+              <i
                 nz-tooltip
                 nzTooltipTitle="可选项，给定存证的名称，用于标识存证，方便之后存证的检索。"
                 nz-icon
                 nzType="question-circle"
                 nzTheme="outline"
-                style="margin-left: 2px"
-              ></i
-            ></label>
+                style="margin-left: 4px"
+              ></i>
+            </label>
           </nz-form-label>
           <nz-form-control
             nzFor="evidenceName"

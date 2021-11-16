@@ -7,6 +7,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 @Component({
   selector: 'app-post-evidence-direct',
   templateUrl: './direct.component.html',
+  // styles: ['::ng-deep label.mLabel {font-size: medium}'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostEvidenceDirectComponent implements OnInit {

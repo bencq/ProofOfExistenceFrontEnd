@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingsService, _HttpClient } from '@delon/theme';
 import { copy } from '@delon/util';
@@ -39,6 +39,7 @@ export class PostEvidenceFileComponent implements OnInit {
   fileList: NzUploadFile[] = [];
 
   readonly evidenceNameMaxChar = 16;
+  readonly maxFileSize = 1024 * 1024 * 1024; //KB
   get evidenceName(): AbstractControl {
     return this.form.controls.evidenceName;
   }
@@ -48,6 +49,10 @@ export class PostEvidenceFileComponent implements OnInit {
   //   return {};
   // };
 
+  onUploadChange(p: NzUploadChangeParam): void {
+    console.log(p.event?.percent);
+  }
+
   onCopy(v?: string): void {
     if (v) {
       copy(v);
@@ -55,7 +60,11 @@ export class PostEvidenceFileComponent implements OnInit {
   }
 
   beforeUpload = (file: NzUploadFile): boolean => {
-    this.fileList = [file];
+    if (file.size! > this.maxFileSize) {
+      this.msg.error(`所选择的文件大小为${file.size}Bytes, 超过文件最大大小限制${this.maxFileSize}Bytes！`);
+    } else {
+      this.fileList = [file];
+    }
     return false;
   };
 

@@ -44,14 +44,18 @@ export class PostEvidenceDynamicFormComponent implements OnInit {
     private modal: NzModalService
   ) {}
 
+  readonly evidenceNameMaxChar = 16;
+
+  get evidenceName(): AbstractControl {
+    return this.form.controls.evidenceName;
+  }
+
   ngOnInit(): void {
     this.form = this.fb.group({
       evidenceName: [null, [Validators.pattern(/^\S{0,16}$/)]]
     });
     this.addField();
   }
-
-  readonly evidenceNameMaxChar = 16;
 
   form!: FormGroup;
   listOfControl: Array<{ id: number; itemKey: string; itemValue: string }> = [];
@@ -180,14 +184,5 @@ export class PostEvidenceDynamicFormComponent implements OnInit {
           });
         }
       });
-  }
-
-  get evidenceName(): AbstractControl {
-    return this.form.controls.evidenceName;
-  }
-
-  evidenceNameCheckboxChanged(ra: any) {
-    this.evidenceName.markAsDirty();
-    this.evidenceName.updateValueAndValidity();
   }
 }

@@ -108,6 +108,25 @@
           </div>
         </nz-col>
       </nz-row>
+      <nz-row [nzGutter]="0">
+        <nz-col [nzSpan]="12">
+          <h4>文件下载</h4>
+          <button
+            nz-button
+            down-file
+            [nzType]="'primary'"
+            [nzSize]="'large'"
+            [http-method]="'POST'"
+            [http-body]="downloadBody"
+            [http-url]="'exportedAPI/v1'"
+            [file-name]="fileOriginalname!"
+            class="mr-sm"
+            [disabled]="!downloadBody"
+          >
+            下载
+          </button>
+        </nz-col>
+      </nz-row>
     </nz-card>
   </nz-col>
 </nz-row>

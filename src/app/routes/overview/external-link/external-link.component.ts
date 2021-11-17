@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { _HttpClient } from '@delon/theme';
 
 @Component({
@@ -6,9 +7,9 @@ import { _HttpClient } from '@delon/theme';
   templateUrl: './external-link.component.html'
 })
 export class OverviewExternalLinkComponent implements OnInit {
-  constructor(private http: _HttpClient) {}
+  constructor() {}
 
   ngOnInit(): void {
-    window.open('http://172.18.197.76:5100/', '_blank');
+    console.log('place holder');
   }
 }

@@ -32,6 +32,8 @@ export class ExploreEvidenceDirectComponent implements OnInit {
 
   loading: boolean = true;
 
+  downloadBody: object | null = null;
+
   ngOnInit(): void {
     this.evidenceAddress = this.router.snapshot.params.evidenceAddress;
     console.log('evidenceAddress', this.evidenceAddress);
@@ -92,6 +94,11 @@ export class ExploreEvidenceDirectComponent implements OnInit {
             this.evidenceData = res.data.evidenceData;
             this.fileOriginalname = res.data.file.originalname;
             this.fileSize = res.data.file.size;
+
+            this.downloadBody = {
+              apiName: 'downloadEvidenceFile',
+              evidenceAddress: this.evidenceAddress
+            };
           }
 
           this.loading = false;

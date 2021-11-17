@@ -16,7 +16,7 @@ const routes: Routes = [
     canActivateChild: [JWTGuard],
     data: {},
     children: [
-      { path: '', redirectTo: 'post-evidence', pathMatch: 'full' },
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
